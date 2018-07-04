@@ -167,37 +167,65 @@ def slide_right(array):
     array = left2right(array)
     return array
 
+def init_array():
+    array = [[0 for i in range(4)] for j in range(4)]
+    #print(array)
+    for i in range(0,3):
+        row = random.randint(0,3)
+        colum = random.randint(0,3)
+        array[row][colum] = random.randint(0,2)*2
+    return array
 
-array = [[random.randint(0,2) for i in range(4)] for j in range(4)]
-#print(array)
-for i in range(4):
-    print(array[i])
+def copy(source):
+    target = [[source[row][colum] for row in range(len(source))] for colum in range(len(source[0]))]
+    return target
 
+def equal(target, source):
+    for row in range(len(target)):
+        for colum in range(len(source)):
+            if target[row][colum] != source[row][colum]:
+                return True
+    return False
 
-while(1):
-    choice = input()
-    if choice == 'w':
-        array = slide_up(array)
-        print("slide up:")
+def run(array):
+    array_pre = list()
+    while(1):
         print_array(array)
         print('\n')
-    elif choice == 's':
-        array = slide_down(array)
-        print("slide down:")
-        print_array(array)
-        print('\n')
-    elif choice == 'a':
-        array = slide_left(array)
-        print("slide left:")
-        print_array(array)
-        print('\n')
-    elif choice == 'd':
-        array = slide_right(array)
-        print("slide right")
-        print_array(array)
-        print('\n')
-    else:
-        print("end")
-        break
+        choice = input()
+        if choice == 'w':
+            array = slide_up(array)
+            print("slide up:")
+        elif choice == 's':
+            array = slide_down(array)
+            print("slide down:")
+        elif choice == 'a':
+            array = slide_left(array)
+            print("slide left:")
+        elif choice == 'd':
+            array = slide_right(array)
+            print("slide right")
+        else:
+            print("end")
+            break
+        index = random.randint(1,2)
+        count = 0
+        if len(array_pre) == 0 or equal(array_pre, array):
+            for i in range(0,index):
+                row = random.randint(0,3)
+                colum = random.randint(0,3)
+                if(array[row][colum] == 0):
+                    array[row][colum] = random.randint(1,2) * 2
+                else:
+                    i-=1
+                    count+=1
+                if count == 5:
+                    break
+        array_pre = copy(array)
+    return array
 
-print_array(array)
+
+if __name__ == "__main__":
+    array = init_array()
+    array = run(array)
+    print_array(array)
