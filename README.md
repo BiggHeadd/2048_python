@@ -1,2 +1,2 @@
 # 2048_python
-a 2048 game
+just a tiny code for spending my spare time
